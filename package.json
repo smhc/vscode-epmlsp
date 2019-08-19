@@ -51,8 +51,7 @@
             "id": "epm",
             "aliases": ["epm", "epm"],
             "extensions": [".eth", ".epm"],
-            "firstLine": "^#!/.*\\bepm(_core|testharness)?\\b",
-            "configuration": "./language-configuration.json"
+            "firstLine": "^#!/.*\\bepm(_core|testharness)?\\b"
         }],
         "configuration": {
             "type": "object",
@@ -63,7 +62,7 @@
                     "default": "epmlsp",
                     "description": "The path to epmlsp executable"
                 },
-                "clangd.arguments": {
+                "epmlsp.arguments": {
                     "type": "array",
                     "default": [],
                     "items": {
@@ -74,7 +73,7 @@
                 "epmlsp.syncFileEvents": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Whether or not to send file events to clangd (File created, changed or deleted). This can be disabled for performance consideration."
+                    "description": "Whether or not to send file events to epmlsp (File created, changed or deleted). This can be disabled for performance consideration."
                 }
             }
         },
