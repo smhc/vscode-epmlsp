@@ -14,6 +14,12 @@ function getConfig<T>(option: string, defaultValue?: any): T {
   return config.get<T>(option, defaultValue);
 }
 
+namespace FetchFunctionRequest {
+export const type =
+    new vscodelc.RequestType<vscodelc.TextDocumentIdentifier, string|undefined,
+                             void, void>('$epmlsp/functionDefn');
+}
+
 class FileStatus {
   private statuses = new Map<string, any>();
   private readonly statusBarItem =
@@ -66,7 +72,20 @@ class EpmlspLanguageClient extends vscodelc.LanguageClient {
  *  your extension is activated the very first time the command is executed
  */
 export function activate(context: vscode.ExtensionContext) {
-  const syncFileEvents = getConfig<boolean>('syncFileEvents', true);
+
+  const myScheme = 'svfunc';
+  const myProvider = new class implements vscode.TextDocumentContentProvider {
+    // emitter and its event
+    onDidChangeEmitter = new vscode.EventEmitter<vscode.Uri>();
+    onDidChange = this.onDidChangeEmitter.event;
+
+    async provideTextDocumentContent(uri: vscode.Uri): Promise<string> {
+      const docIdentifier = vscodelc.TextDocumentIdentifier.create(uri.toString());
+      const doc = await epmlspClient.sendRequest(FetchFunctionRequest.type, docIdentifier);
+      return <string>doc;
+    }
+  }
+  context.subscriptions.push(vscode.workspace.registerTextDocumentContentProvider(myScheme, myProvider));
 
   const epmlsp: vscodelc.Executable = {
     command : getConfig<string>('path'),
@@ -77,7 +96,8 @@ export function activate(context: vscode.ExtensionContext) {
   const clientOptions: vscodelc.LanguageClientOptions = {
         // Register the server for epm files
         documentSelector: [
-            { scheme: 'file', language: 'epm' }
+            { scheme: 'file', language: 'epm' },
+            { scheme: 'svfunc', language: 'epm' }
         ],
         initializationOptions: { epmlspFileStatus: true },
         // Do not switch to output window when epmlsp returns output
@@ -106,4 +126,5 @@ export function activate(context: vscode.ExtensionContext) {
   // "command is not registered" error.
   context.subscriptions.push(vscode.commands.registerCommand(
       'epmlsp-vscode.activate', async () => {}));
+
 }

@@ -2,7 +2,7 @@
     "name": "vscode-epmlsp",
     "displayName": "vscode-epmlsp",
     "description": "EPM Language Server",
-    "version": "0.0.1",
+    "version": "0.0.3",
     "publisher": "smhc",
     "engines": {
         "vscode": "^1.36.0"
@@ -69,11 +69,6 @@
                         "type": "string"
                     },
                     "description": "Arguments for epmlsp server"
-                },
-                "epmlsp.syncFileEvents": {
-                    "type": "boolean",
-                    "default": true,
-                    "description": "Whether or not to send file events to epmlsp (File created, changed or deleted). This can be disabled for performance consideration."
                 }
             }
         },
