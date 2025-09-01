@@ -2,7 +2,7 @@
     "name": "vscode-epmlsp",
     "displayName": "vscode-epmlsp",
     "description": "EPM Language Server",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "publisher": "smhc",
     "engines": {
         "vscode": "^1.36.0"
