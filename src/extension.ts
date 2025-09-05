@@ -81,7 +81,7 @@ class EpmlspLanguageClient extends vscodelc.LanguageClient {
  *  your extension is activated the very first time the command is executed
  */
 export function activate(context: vscode.ExtensionContext) {
-  //   const myScheme = "svfunc";
+  //   const myScheme = "ec";
   //   const myProvider = new (class implements vscode.TextDocumentContentProvider {
   //     // emitter and its event
   //     onDidChangeEmitter = new vscode.EventEmitter<vscode.Uri>();
@@ -102,10 +102,13 @@ export function activate(context: vscode.ExtensionContext) {
   //     vscode.workspace.registerTextDocumentContentProvider(myScheme, myProvider)
   //   );
 
-  const epmlsp: vscodelc.Executable = {
+  let epmlsp: vscodelc.Executable = {
     command: getConfig<string>("path"),
     args: getConfig<string[]>("arguments"),
   };
+  if (epmlsp.args.includes(".bat") && process.platform === "win32") {
+    epmlsp.options = { shell: true };
+  }
   const serverOptions: vscodelc.ServerOptions = epmlsp;
 
   const clientOptions: vscodelc.LanguageClientOptions = {
