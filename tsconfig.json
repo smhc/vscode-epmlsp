@@ -1,26 +1,20 @@
 {
     "compilerOptions": {
-        "module": "commonjs",
-        "target": "es6",
+    "module": "Node16",
+        "target": "ES2022",
+        "moduleResolution": "node16",
         "outDir": "out",
-        "lib": [
-            "es6",
-            "es2015.core",
-            "es2015.collection",
-            "es2015.generator",
-            "es2015.iterable",
-            "es2015.promise",
-            "es2015.symbol",
-            "es2016.array.include"
-        ],
+        "lib": ["ES2022"],
         "sourceMap": true,
         "rootDir": ".",
-        "alwaysStrict": true,
+        "esModuleInterop": true,
+        "strict": true,
         "noEmitOnError": true,
         "noFallthroughCasesInSwitch": true,
         "noImplicitAny": true,
         "noImplicitReturns": true,
-        "noImplicitThis": true
+        "noImplicitThis": true,
+    "types": ["node", "vscode", "mocha"]
     },
     "exclude": [
         "node_modules",
